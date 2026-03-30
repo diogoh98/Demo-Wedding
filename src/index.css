@@ -4,7 +4,8 @@
 
 @layer base {
   body {
-    @apply bg-cream text-charcoal font-sans antialiased;
+    @apply bg-charcoal text-cream font-sans antialiased;
+    cursor: none; /* Hide default cursor for standard elements, will show custom cursor */
   }
   
   /* Prevent horizontal scrolling from animations */
@@ -16,10 +17,56 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Ensure links and buttons show none so custom cursor handles it, unless we specifically want pointer */
+  a, button, input, textarea, select {
+    cursor: none;
+  }
 }
 
 @layer utilities {
   .clip-none {
     clip-path: none;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom Cursor Styles */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #D4AF37; /* Gold */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(212, 175, 55, 0.5); /* Gold outline */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.custom-cursor-follower.active {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(212, 175, 55, 0.1);
+  mix-blend-mode: difference;
 }
